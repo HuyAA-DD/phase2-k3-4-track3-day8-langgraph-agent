@@ -2,10 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from langgraph.checkpoint.base import BaseCheckpointSaver
 
 
-def build_checkpointer(kind: str = "memory", database_url: str | None = None) -> Any | None:
+def build_checkpointer(
+    kind: str = "memory",
+    database_url: str | None = None,
+) -> BaseCheckpointSaver | None:
     """Return a LangGraph checkpointer.
 
     TODO(student): implement SQLite support for the persistence extension track.

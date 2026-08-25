@@ -49,6 +49,7 @@ pip install langchain-anthropic  # for Anthropic
 # Configure .env
 cp .env.example .env
 # Edit .env and set OPENAI_API_KEY or ANTHROPIC_API_KEY
+# The LLM factory loads this file automatically via python-dotenv.
 ```
 
 ---
@@ -243,4 +244,4 @@ Pick one or more:
 
 5. **SqliteSaver API**: In `langgraph-checkpoint-sqlite` 3.x, use `SqliteSaver(conn=sqlite3.connect(...))` not `SqliteSaver.from_conn_string()`.
 
-6. **API key not set**: If you get "No LLM API key found", check your `.env` file and make sure it's loaded (use `python-dotenv` or export manually).
+6. **API key not set**: If you get "No LLM API key found", check that `.env` is in the project root and contains a supported API key. The LLM factory loads it automatically; exported environment variables also work and take precedence.

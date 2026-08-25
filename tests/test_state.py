@@ -24,6 +24,18 @@ def test_initial_state_has_required_fields():
     assert "events" in state
 
 
+def test_initial_state_has_workflow_control_fields() -> None:
+    """Workflow consumers can safely read optional control values from initial state."""
+    scenario = Scenario(id="workflow-fields", query="help", expected_route=Route.SIMPLE)
+
+    state = initial_state(scenario)
+
+    assert state["evaluation_result"] is None
+    assert state["pending_question"] is None
+    assert state["proposed_action"] is None
+    assert state["approval"] is None
+
+
 def test_load_scenarios():
     scenarios = load_scenarios("data/sample/scenarios.jsonl")
     assert len(scenarios) >= 6

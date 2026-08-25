@@ -13,8 +13,23 @@ from __future__ import annotations
 
 import os
 
+from dotenv import load_dotenv
+from langchain_core.language_models.chat_models import BaseChatModel
 
-def get_llm(model: str | None = None, temperature: float = 0.0):
+# Load local development secrets once, when this factory module is first imported.
+# Existing process environment variables keep precedence (override=False by default).
+load_dotenv()
+
+
+def has_llm_api_key() -> bool:
+    """Return whether a supported provider key is available to this process."""
+    return any(
+        os.getenv(variable)
+        for variable in ("GEMINI_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")
+    )
+
+
+def get_llm(model: str | None = None, temperature: float = 0.0) -> BaseChatModel:
     """Create an LLM client from environment configuration.
 
     Checks for API keys in this order:
